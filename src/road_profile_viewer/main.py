@@ -21,8 +21,9 @@ from dash import Dash, Input, Output, dcc, html
 
 
 def generate_road_profile(
-    num_points=100, x_max=80
-):  # PEP8 Violation: Missing space after comma
+    num_points=100,
+    x_max=80
+):
     """
     Generate a road profile using a clothoid-like approximation.
 
@@ -186,9 +187,9 @@ def find_intersection(x_road, y_road, angle_degrees, camera_x=0, camera_y=1.5):
     return None, None, None
 
 
-def HelperFunction(val):  # PEP8 Violation: Function name should be snake_case
+def helper_function(val):
     """Unused helper function that violates naming convention"""
-    result = val * 2  # PEP8 Violation: Missing spaces around operators
+    result = val * 2
     return result
 
 
@@ -256,7 +257,7 @@ def create_dash_app():
                         [
                             html.Li("The dark grey line represents the road profile"),
                             html.Li(
-                                "The red point at (0, 2.0) represents the camera position"
+                                "The red point shows the camera position"
                             ),
                             html.Li(
                                 "The blue line shows the camera ray at the specified angle"
@@ -315,7 +316,7 @@ def create_dash_app():
         x_road, y_road = generate_road_profile(num_points=100, x_max=80)
 
         # Camera position
-        camera_x, camera_y = 0, 2.0  # PEP8 Violation: Missing spaces after commas
+        camera_x, camera_y = 0, 2.0
 
         # Find intersection first to determine ray length
         x_intersect, y_intersect, distance = find_intersection(
@@ -351,8 +352,8 @@ def create_dash_app():
                 y=y_road,
                 mode="lines+markers",
                 name="Road Profile",
-                line=dict(color="#4a4a4a", width=3),
-                marker=dict(size=4, color="#4a4a4a"),
+                line={"color": "#4a4a4a", "width": 3},
+                marker={"size": 4, "color": "#4a4a4a"},
                 hovertemplate="Road<br>x: %{x:.2f}<br>y: %{y:.2f}<extra></extra>",
             )
         )
@@ -364,9 +365,9 @@ def create_dash_app():
                 y=[camera_y],
                 mode="markers",
                 name="Camera",
-                marker=dict(
-                    size=12, color="red", symbol="circle"
-                ),  # PEP8 Violation: Missing spaces after commas
+                marker={
+                    "size": 12, "color": "red", "symbol": "circle"
+                },
                 hovertemplate="Camera<br>Position: (%{x:.2f}, %{y:.2f})<extra></extra>",
             )
         )
@@ -378,7 +379,7 @@ def create_dash_app():
                 y=y_ray,
                 mode="lines",
                 name=f"Camera Ray ({angle}°)",
-                line=dict(color="blue", width=2, dash="dash"),
+                line={"color": "blue", "width": 2, "dash": "dash"},
                 hovertemplate="Camera Ray<br>x: %{x:.2f}<br>y: %{y:.2f}<extra></extra>",
             )
         )
@@ -392,11 +393,12 @@ def create_dash_app():
                     y=[y_intersect],
                     mode="markers",
                     name="Intersection",
-                    marker=dict(size=15, color="green", symbol="star"),
+                    marker={"size": 15, "color": "green", "symbol": "star"},
                     hovertemplate=f"Intersection Point<br>Position: ({x_intersect:.2f}, {y_intersect:.2f})<br>Distance from camera: {distance:.2f}<extra></extra>",
                 )
             )
-            info_text = f"Intersection found at ({x_intersect:.2f}, {y_intersect:.2f}) | Distance: {distance:.2f} units"
+            info_text = (f"Intersection found at ({x_intersect:.2f}, {y_intersect:.2f}) | "
+                        f"Distance: {distance:.2f} units")
         else:
             info_text = "No intersection found with current angle"
 
@@ -406,25 +408,25 @@ def create_dash_app():
             yaxis_title="Y Position (m)",
             hovermode="closest",
             showlegend=True,
-            legend=dict(
-                x=1.02,
-                y=1,
-                xanchor="left",
-                yanchor="top",
-                bgcolor="rgba(255,255,255,0.8)",
-                bordercolor="#dee2e6",
-                borderwidth=1,
-            ),
+            legend={
+                "x": 1.02,
+                "y": 1,
+                "xanchor": "left",
+                "yanchor": "top",
+                "bgcolor": "rgba(255,255,255,0.8)",
+                "bordercolor": "#dee2e6",
+                "borderwidth": 1,
+            },
             plot_bgcolor="#f8f9fa",
-            xaxis=dict(gridcolor="#dee2e6", range=[-2, 82], constrain="domain"),
-            yaxis=dict(
-                gridcolor="#dee2e6",
-                scaleanchor="x",
-                scaleratio=1,
-                range=[-0.5, 10],
-                constrain="domain",
-            ),
-            margin=dict(l=50, r=150, t=30, b=50),
+            xaxis={"gridcolor": "#dee2e6", "range": [-2, 82], "constrain": "domain"},
+            yaxis={
+                "gridcolor": "#dee2e6",
+                "scaleanchor": "x",
+                "scaleratio": 1,
+                "range": [-0.5, 10],
+                "constrain": "domain",
+            },
+            margin={"l": 50, "r": 150, "t": 30, "b": 50},
         )
 
         return fig, info_text
