@@ -13,7 +13,6 @@ for educational purposes). It creates an interactive Dash application that visua
 import numpy as np
 from dash import Dash, html, dcc, Input, Output
 import plotly.graph_objects as go
-import sys,os  # PEP8 Violation: Multiple imports on one line
 
 
 # =============================================================================
